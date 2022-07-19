@@ -27,13 +27,13 @@ public class Money implements Expression {
     }
 
 
-    public Money times(int multiplier){
+    public Expression times(int multiplier){
         return new Money(multiplier*amount,this.currency);
     }
 
     //Augend - first value of addition operation. the '3' in 3 + 6
     //Addend - 2nd value of addition operation. the '6' in 3 + 6
-    Expression plus(Money addend){
+    public Expression plus(Expression addend){
         return new Sum(this,addend);
     }
 

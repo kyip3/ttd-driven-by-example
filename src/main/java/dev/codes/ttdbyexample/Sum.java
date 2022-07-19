@@ -1,17 +1,27 @@
 package dev.codes.ttdbyexample;
 
 public class Sum implements Expression{
-    Money augend;
-    Money addend;
+    Expression augend;
+    Expression addend;
 
-    public Sum(Money augend, Money addend) {
+    public Sum(Expression augend, Expression addend) {
         this.augend = augend;
         this.addend = addend;
     }
 
     @Override
     public Money reduce(Bank bank,String toCurrency){
-        int amount = augend.amount + addend.amount;
+        int amount = augend.reduce(bank,toCurrency).amount + addend.reduce(bank,toCurrency).amount;
         return new Money(amount,toCurrency);
+    }
+
+    @Override
+    public Expression plus(Expression tenFrancs) {
+        return new Sum(this,tenFrancs);
+    }
+
+    @Override
+    public Expression times(int multiplier) {
+        return new Sum(augend.times(multiplier),addend.times(multiplier));
     }
 }
